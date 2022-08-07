@@ -1,4 +1,4 @@
-﻿namespace MarathonRunner.Infrastructures.AzureBlobStorage;
+﻿namespace TerryU16.MarathonRunner.Infrastructures.AzureBlobStorage;
 
 public class BlobClientOption
 {

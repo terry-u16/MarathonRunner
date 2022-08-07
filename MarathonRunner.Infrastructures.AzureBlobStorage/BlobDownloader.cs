@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using TerryU16.MarathonRunner.Core.Storage;
 
-namespace MarathonRunner.Infrastructures.AzureBlobStorage;
+namespace TerryU16.MarathonRunner.Infrastructures.AzureBlobStorage;
 
 public class BlobDownloader : IDownloader
 {
