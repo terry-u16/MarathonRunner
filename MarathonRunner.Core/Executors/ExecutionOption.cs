@@ -5,6 +5,7 @@ public class ExecutionOption
     public string ScoreRegex { get; set; } = @"Score = (?<score>\d+)";
     public string SeedFormat { get; set; } = "0000";
     public string WorkingDirectory { get; set; } = ".";
+    public string CloudFunctionKey { get; set; } = "";
     public Uri? CloudEndpoint { get; set; } = null;
     public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(5);
     public ExecutionStep[] ExecutionSteps { get; set; } = Array.Empty<ExecutionStep>();
