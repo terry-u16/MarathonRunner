@@ -3,11 +3,9 @@ using System.Text.RegularExpressions;
 using Cysharp.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using TerryU16.MarathonRunner.Core;
 using TerryU16.MarathonRunner.Core.Storage;
-using TerryU16.MarathonRunner.Core.Executors;
 
-namespace TerryU16.MarathonRunner.Executors.Local;
+namespace TerryU16.MarathonRunner.Core.Executors;
 
 public class LocalExecutor : IExecutor
 {
@@ -41,7 +39,7 @@ public class LocalExecutor : IExecutor
                 var consumeStdOut = SetOutputCallback(stdOut, regex, option.StdOutPath, linkedCts.Token);
                 var consumeStdError = SetOutputCallback(stdError, regex, option.StdErrorPath, linkedCts.Token);
 
-                if (option.StdInPath is not null)
+                if (!string.IsNullOrWhiteSpace(option.StdInPath))
                 {
                     try
                     {
@@ -97,7 +95,7 @@ public class LocalExecutor : IExecutor
             long score = 0;
 
             // 出力先がnullの場合はMemoryStreamにゴミを吐き出す
-            var stream = outputPath is not null ? new StreamWriter(outputPath) : new StreamWriter(new MemoryStream());
+            var stream = !string.IsNullOrWhiteSpace(outputPath) ? new StreamWriter(outputPath) : new StreamWriter(new MemoryStream());
 
             await foreach (var line in outputs.WithCancellation(cancellationToken))
             {

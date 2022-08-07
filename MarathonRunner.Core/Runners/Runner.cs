@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using TerryU16.MarathonRunner.Core.Dispatchers;
+﻿using TerryU16.MarathonRunner.Core.Dispatchers;
 
 namespace TerryU16.MarathonRunner.Core.Runners;
 

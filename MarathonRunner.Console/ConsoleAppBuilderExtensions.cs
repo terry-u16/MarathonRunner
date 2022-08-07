@@ -10,7 +10,6 @@ using TerryU16.MarathonRunner.Core.Executors;
 using TerryU16.MarathonRunner.Core.Runners;
 using TerryU16.MarathonRunner.Core.Runners.Callbacks;
 using TerryU16.MarathonRunner.Core.Storage;
-using TerryU16.MarathonRunner.Executors.Local;
 using TerryU16.MarathonRunner.Infrastructures.AzureBlobStorage;
 
 namespace TerryU16.MarathonRunner.Console;
@@ -23,6 +22,7 @@ public static class ConsoleAppBuilderExtensions
         return builder.ConfigureAppConfiguration(configuration =>
         {
             configuration.AddJsonFile(Constants.ConfigurationFileName, true);
+            configuration.AddUserSecrets("d964bdd1-3335-4c95-b108-626596194283");
         });
     }
 

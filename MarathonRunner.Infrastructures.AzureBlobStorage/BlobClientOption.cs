@@ -2,5 +2,6 @@
 
 public class BlobClientOption
 {
+    // User Secretsから取得する想定
     public string? ConnectionString { get; set; }
 }
