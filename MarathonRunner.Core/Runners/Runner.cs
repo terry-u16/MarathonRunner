@@ -11,10 +11,10 @@ public abstract class Runner<T> where T : IDispatcher
     private readonly T _dispatcher;
     private readonly IRunnerCallback[] _callbacks;
 
-    private protected Runner(T dispatcher, IRunnerCallback[] callbacks, int startSeed, int endSeed, int parallelCount)
+    private protected Runner(T dispatcher, IEnumerable<IRunnerCallback> callbacks, int startSeed, int endSeed, int parallelCount)
     {
         _dispatcher = dispatcher;
-        _callbacks = callbacks;
+        _callbacks = callbacks.ToArray();
         _startSeed = startSeed;
         _endSeed = endSeed;
         _parallelCount = parallelCount;

@@ -1,16 +1,18 @@
-﻿namespace TerryU16.MarathonRunner.Core.Runners.Callbacks;
+﻿using Microsoft.Extensions.Options;
+
+namespace TerryU16.MarathonRunner.Core.Runners.Callbacks;
 
 public class SummaryLogger : IRunnerCallback
 {
-    private readonly string _filename;
+    private readonly string _filePath;
     private readonly long _referenceScore;
     private long _totalScore;
     private int _completedCaseCount;
 
-    public SummaryLogger(string filename, long referenceScore)
+    public SummaryLogger(IOptions<RunnerOption> options)
     {
-        _filename = filename;
-        _referenceScore = referenceScore;
+        _filePath = options.Value.SummaryFilePath;
+        _referenceScore = options.Value.ReferenceScore;
         _totalScore = 0;
         _completedCaseCount = 0;
     }
@@ -32,13 +34,13 @@ public class SummaryLogger : IRunnerCallback
 
     private StreamWriter CreateLogFileWriter()
     {
-        var directory = Path.GetDirectoryName(_filename);
+        var directory = Path.GetDirectoryName(_filePath);
 
         if (directory is not null && !Directory.Exists(directory))
         {
             Directory.CreateDirectory(directory);
         }
 
-        return new StreamWriter(_filename, true);
+        return new StreamWriter(_filePath, true);
     }
 }

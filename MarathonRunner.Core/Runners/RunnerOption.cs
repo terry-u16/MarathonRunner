@@ -7,4 +7,5 @@ public class RunnerOption
     public long ReferenceScore { get; set; } = 100;
     public int LocalParallelCount { get; set; } = 16;
     public int CloudParallelCount { get; set; } = 200;
+    public string SummaryFilePath { get; set; } = @".\data\score_history.txt";
 }
