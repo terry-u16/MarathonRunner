@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarathonRunner.Core", "MarathonRunner.Core\MarathonRunner.Core.csproj", "{DC2718E8-C5AF-4D27-8989-7CE3A87118A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarathonRunner.Infrastructures.AzureBlobStorage", "MarathonRunner.Infrastructures.AzureBlobStorage\MarathonRunner.Infrastructures.AzureBlobStorage.csproj", "{2221A16F-6C24-421A-A23F-D442D8C88583}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{DC2718E8-C5AF-4D27-8989-7CE3A87118A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC2718E8-C5AF-4D27-8989-7CE3A87118A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC2718E8-C5AF-4D27-8989-7CE3A87118A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2221A16F-6C24-421A-A23F-D442D8C88583}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2221A16F-6C24-421A-A23F-D442D8C88583}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2221A16F-6C24-421A-A23F-D442D8C88583}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2221A16F-6C24-421A-A23F-D442D8C88583}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
