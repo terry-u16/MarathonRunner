@@ -2,5 +2,5 @@
 
 public interface IExecutor
 {
-    Task<SingleCaseResult> ExecuteAsync(SingleCaseExecutorArgs args);
+    Task<TestCaseResult> ExecuteAsync(SingleCaseExecutorArgs args, CancellationToken ct = default);
 }

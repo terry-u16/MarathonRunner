@@ -1,0 +1,47 @@
+﻿using Microsoft.Extensions.Options;
+using TerryU16.MarathonRunner.Core.Dispatchers;
+
+namespace TerryU16.MarathonRunner.Core.Runners;
+
+public class Runner<T> where T : IDispatcher
+{
+    private readonly int _startSeed;
+    private readonly int _endSeed;
+    private readonly int _parallelCount;
+    private readonly T _dispatcher;
+    private readonly IRunnerCallback[] _callbacks;
+
+    public Runner(T dispatcher, IRunnerCallback[] callbacks, IOptions<RunnerOption> options)
+    {
+        _dispatcher = dispatcher;
+        _callbacks = callbacks;
+        _startSeed = options.Value.StartSeed;
+        _endSeed = options.Value.EndSeed;
+        _parallelCount = options.Value.ParallelCount;
+    }
+
+    public async Task RunAsync(CancellationToken ct = default)
+    {
+        var option = new ParallelOptions
+        {
+            MaxDegreeOfParallelism = _parallelCount,
+            CancellationToken = ct
+        };
+
+        var seeds = Enumerable.Range(_startSeed, _endSeed - _startSeed);
+
+        await Parallel.ForEachAsync(seeds, option, async (seed, innerCt) =>
+        {
+            var result = await _dispatcher.DispatchAsync(seed, innerCt);
+            foreach (var callback in _callbacks)
+            {
+                callback.OnSingleTestEnd(seed, result);
+            }
+        });
+
+        foreach (var callback in _callbacks)
+        {
+            callback.OnAllTestEnd();
+        }
+    }
+}
