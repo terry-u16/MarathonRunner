@@ -3,7 +3,7 @@ using TerryU16.MarathonRunner.Core.Dispatchers;
 
 namespace TerryU16.MarathonRunner.Core.Runners;
 
-public class Runner<T> where T : IDispatcher
+public abstract class Runner<T> where T : IDispatcher
 {
     private readonly int _startSeed;
     private readonly int _endSeed;
@@ -11,13 +11,13 @@ public class Runner<T> where T : IDispatcher
     private readonly T _dispatcher;
     private readonly IRunnerCallback[] _callbacks;
 
-    public Runner(T dispatcher, IRunnerCallback[] callbacks, IOptions<RunnerOption> options)
+    private protected Runner(T dispatcher, IRunnerCallback[] callbacks, int startSeed, int endSeed, int parallelCount)
     {
         _dispatcher = dispatcher;
         _callbacks = callbacks;
-        _startSeed = options.Value.StartSeed;
-        _endSeed = options.Value.EndSeed;
-        _parallelCount = options.Value.ParallelCount;
+        _startSeed = startSeed;
+        _endSeed = endSeed;
+        _parallelCount = parallelCount;
     }
 
     public async Task RunAsync(CancellationToken ct = default)

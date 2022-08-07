@@ -5,5 +5,6 @@ public class RunnerOption
     public int StartSeed { get; set; } = 0;
     public int EndSeed { get; set; } = 1024;
     public long ReferenceScore { get; set; } = 100;
-    public int ParallelCount { get; set; } = 1;
+    public int LocalParallelCount { get; set; } = 16;
+    public int CloudParallelCount { get; set; } = 200;
 }

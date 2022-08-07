@@ -31,8 +31,8 @@ public static class ConsoleAppBuilderExtensions
         return builder.ConfigureServices((context, services) =>
         {
             // DI
-            services.AddTransient<Runner<LocalDispatcher>>();
-            services.AddTransient<Runner<CloudDispatcher>>();
+            services.AddTransient<LocalRunner>();
+            services.AddTransient<CloudRunner>();
             services.AddTransient<IRunnerCallback, ScoreLogger>();
             services.AddTransient<IRunnerCallback, SummaryLogger>();
             services.AddTransient<IRunnerCallback, TleCollector>();
