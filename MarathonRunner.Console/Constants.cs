@@ -2,5 +2,5 @@
 
 public static class Constants
 {
-    public const string ConfigurationFileName = "runner_configuration.json";
+    public const string ConfigurationFileName = "runner_config.json";
 }

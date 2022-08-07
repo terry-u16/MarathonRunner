@@ -27,21 +27,28 @@ public class Commands : ConsoleAppBase
                 System.Console.WriteLine($"{Constants.ConfigurationFileName}を上書きします。よろしいですか？[y/n]");
                 result = System.Console.ReadLine()?.ToLower();
             }
+
+            if (result == "n")
+            {
+                return;
+            }
         }
 
         var problemName = ShowInputPrompt("問題名");
         var timeLimit = TimeSpan.FromSeconds(double.Parse(ShowInputPrompt("実行時間制限[s]")));
         var caseCount = int.Parse(ShowInputPrompt("実行ケース数"));
+        var referenceScore = long.Parse(ShowInputPrompt("レファレンススコア"));
         var configuration = new Configuration(new (), new (), new (), new ())
         {
             ProblemOption =
             {
                 ProblemName = problemName,
-                TimeLimit = timeLimit
+                TimeLimit = timeLimit,
             },
             RunnerOption =
             {
-                EndSeed = caseCount
+                EndSeed = caseCount,
+                ReferenceScore = referenceScore
             },
             ExecutionOption =
             {
@@ -50,7 +57,7 @@ public class Commands : ConsoleAppBase
                 {
                     new ExecutionStep
                     {
-                        ExecutionCommand = "a.exe",
+                        ExecutionCommand = $"{problemName}-a.exe",
                         StdInPath = "in/{SEED}.txt"
                     }
                 },

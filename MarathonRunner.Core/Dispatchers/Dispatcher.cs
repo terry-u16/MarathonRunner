@@ -30,7 +30,7 @@ public abstract class Dispatcher : IDispatcher
         try
         {
             var steps = _executionSteps.Select(step => step.WithSeed(seed, _seedFormat)).ToArray();
-            var args = new SingleCaseExecutorArgs(_problemName, _scoreRegex, _timeout, _executionSteps, _files);
+            var args = new SingleCaseExecutorArgs(_problemName, _scoreRegex, _timeout, steps, _files);
             using var cancellationTokenSource = new CancellationTokenSource(_timeout);
             return await DispatchAsyncInner(args, ct);
         }
