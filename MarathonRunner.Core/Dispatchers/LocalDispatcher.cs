@@ -14,6 +14,6 @@ public class LocalDispatcher : Dispatcher
         _executor = executor;
     }
 
-    private protected override async Task<TestCaseResult> DispatchAsyncInner(SingleCaseExecutorArgs args, CancellationToken ct = default) 
+    protected override async Task<TestCaseResult> DispatchAsyncInner(SingleCaseExecutorArgs args, CancellationToken ct = default) 
         => await _executor.ExecuteAsync(args, ct);
 }

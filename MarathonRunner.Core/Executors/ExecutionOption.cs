@@ -8,11 +8,6 @@ public class ExecutionOption
 
     public string WorkingDirectory { get; set; } = ".";
 
-    public string CloudFunctionKey { get; set; } = "";
-
-    // User Secretsから取得する想定
-    public Uri? CloudEndpoint { get; set; }
-
     public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(5);
 
     public ExecutionStep[] ExecutionSteps { get; set; } = Array.Empty<ExecutionStep>();

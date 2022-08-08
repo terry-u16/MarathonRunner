@@ -45,7 +45,7 @@ public class ScoreLogger : IRunnerCallback
         var rate = (double)result.Score * 100 / _referenceScore;
         var average = (double)_totalScore * 100 / (_referenceScore * _completedCaseCount);
 
-        _logger.LogInformation("case {seed:000000} | completed: {count,5} / {cases,5} | {elapsed,5:#,##0} ms | {score,11:#,##0} | rate: {rate,7:0.000}% | average: {average,7:0.000}%",
+        _logger.LogInformation("case {seed:00000} | completed: {count,5} / {cases,5} | {elapsed,5:#,##0} ms | {score,11:#,##0} | rate: {rate,7:0.000}% | average: {average,7:0.000}%",
             seed, _completedCaseCount, _plannedCaseCount, elapsed, result.Score, rate, average);
     }
 

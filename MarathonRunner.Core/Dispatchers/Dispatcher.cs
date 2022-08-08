@@ -14,7 +14,7 @@ public abstract class Dispatcher : IDispatcher
     private readonly string[] _files;
     private readonly ILogger<Dispatcher> _logger;
 
-    private protected Dispatcher(IOptions<ProblemOption> problemOptions, IOptions<ExecutionOption> executionOptions, ILogger<Dispatcher> logger)
+    protected Dispatcher(IOptions<ProblemOption> problemOptions, IOptions<ExecutionOption> executionOptions, ILogger<Dispatcher> logger)
     {
         _logger = logger;
         _problemName = problemOptions.Value.ProblemName;
@@ -41,5 +41,5 @@ public abstract class Dispatcher : IDispatcher
         }
     }
 
-    private protected abstract Task<TestCaseResult> DispatchAsyncInner(SingleCaseExecutorArgs args, CancellationToken ct = default);
+    protected abstract Task<TestCaseResult> DispatchAsyncInner(SingleCaseExecutorArgs args, CancellationToken ct = default);
 }

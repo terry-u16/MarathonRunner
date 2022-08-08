@@ -2,15 +2,16 @@
 using System.Text.Json;
 using TerryU16.MarathonRunner.Core.Executors;
 using TerryU16.MarathonRunner.Core.Runners;
+using TerryU16.MarathonRunner.Infrastructures.GoogleCloud;
 
 namespace TerryU16.MarathonRunner.Console;
 
 public class Commands : ConsoleAppBase
 {
     private readonly LocalRunner _localRunner;
-    private readonly CloudRunner _cloudRunner;
+    private readonly GoogleCloudRunner _cloudRunner;
 
-    public Commands(LocalRunner localRunner, CloudRunner cloudRunner)
+    public Commands(LocalRunner localRunner, GoogleCloudRunner cloudRunner)
     {
         _localRunner = localRunner;
         _cloudRunner = cloudRunner;

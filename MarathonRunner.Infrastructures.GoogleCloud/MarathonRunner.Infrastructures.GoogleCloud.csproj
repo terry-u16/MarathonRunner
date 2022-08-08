@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>TerryU16.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Kurukuru" Version="1.4.2" />
+    <PackageReference Include="ProcessX" Version="1.5.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MarathonRunner.Core\MarathonRunner.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -11,6 +11,7 @@ using TerryU16.MarathonRunner.Core.Runners;
 using TerryU16.MarathonRunner.Core.Runners.Callbacks;
 using TerryU16.MarathonRunner.Core.Storage;
 using TerryU16.MarathonRunner.Infrastructures.AzureBlobStorage;
+using TerryU16.MarathonRunner.Infrastructures.GoogleCloud;
 
 namespace TerryU16.MarathonRunner.Console;
 
@@ -32,13 +33,13 @@ public static class ConsoleAppBuilderExtensions
         {
             // DI
             services.AddTransient<LocalRunner>();
-            services.AddTransient<CloudRunner>();
+            services.AddTransient<GoogleCloudRunner>();
             services.AddTransient<IRunnerCallback, ScoreLogger>();
             services.AddTransient<IRunnerCallback, SummaryLogger>();
             services.AddTransient<IRunnerCallback, TleCollector>();
             services.AddTransient<IRunnerCallback, WrongAnswerCollector>();
             services.AddTransient<LocalDispatcher>();
-            services.AddTransient<CloudDispatcher>();
+            services.AddTransient<GoogleCloudDispatcher>();
             services.AddTransient<IExecutor, LocalExecutor>();
             services.AddTransient<IDownloader, BlobDownloader>();
 
@@ -48,13 +49,10 @@ public static class ConsoleAppBuilderExtensions
             services.Configure<RunnerOption>(configurationRoot.GetSection(nameof(RunnerOption)));
             services.Configure<ExecutionOption>(configurationRoot.GetSection(nameof(ExecutionOption)));
             services.Configure<BlobClientOption>(configurationRoot.GetSection(nameof(BlobClientOption)));
-            
+            services.Configure<GoogleCloudOptions>(configurationRoot.GetSection(nameof(GoogleCloudOptions)));
+
             // HttpClient
-            services.AddHttpClient<CloudDispatcher>((s, client) =>
-            {
-                var functionKey = s.GetRequiredService<IOptions<ExecutionOption>>().Value.CloudFunctionKey;
-                client.DefaultRequestHeaders.Add("x-functions-key", functionKey);
-            }).AddPolicyHandler(GetRetryPolicy());
+            services.AddHttpClient<GoogleCloudDispatcher>().AddPolicyHandler(GetRetryPolicy());
         });
     }
 
