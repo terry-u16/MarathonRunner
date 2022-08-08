@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "MarathonRunner.AzureFunctions": {
-      "commandName": "Project",
-      "commandLineArgs": "--port 7070",
-      "launchBrowser": false
-    }
-  }
-}
