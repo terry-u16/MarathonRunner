@@ -37,6 +37,7 @@ public class Commands : ConsoleAppBase
         var problemName = ShowInputPrompt("問題名");
         var timeLimit = TimeSpan.FromSeconds(double.Parse(ShowInputPrompt("実行時間制限[s]")));
         var caseCount = int.Parse(ShowInputPrompt("実行ケース数"));
+        var scoreRegex = ShowInputPrompt("スコア正規表現");
         var referenceScore = long.Parse(ShowInputPrompt("レファレンススコア"));
         var configuration = new Configuration(new (), new (), new (), new ())
         {
@@ -52,6 +53,7 @@ public class Commands : ConsoleAppBase
             },
             ExecutionOption =
             {
+                ScoreRegex = scoreRegex,
                 Timeout = timeLimit * 2,
                 ExecutionSteps = new[]
                 {

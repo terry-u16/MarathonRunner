@@ -25,4 +25,10 @@
     <ProjectReference Include="..\MarathonRunner.Infrastructures.AzureBlobStorage\MarathonRunner.Infrastructures.AzureBlobStorage.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

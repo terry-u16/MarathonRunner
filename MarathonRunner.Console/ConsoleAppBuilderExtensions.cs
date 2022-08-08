@@ -61,7 +61,10 @@ public static class ConsoleAppBuilderExtensions
     private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
     {
         var jitterier = Random.Shared;
-        return HttpPolicyExtensions.HandleTransientHttpError()
-            .WaitAndRetryAsync(10, _ => TimeSpan.FromSeconds(2) + TimeSpan.FromMilliseconds(jitterier.Next(0, 500)));
+        return HttpPolicyExtensions
+            .HandleTransientHttpError()
+            .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
+            
+            .WaitAndRetryAsync(600, _ => TimeSpan.FromMilliseconds(10) + TimeSpan.FromMilliseconds(jitterier.Next(0, 5)));
     }
 }
