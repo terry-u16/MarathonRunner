@@ -6,7 +6,7 @@ namespace TerryU16.MarathonRunner.Infrastructures.GoogleCloud;
 internal class IdTokenService
 {
     private Task<string>? _idTokenTask;
-    private DateTimeOffset _lastUpdatedTime = DateTimeOffset.Now;
+    private DateTimeOffset _lastUpdatedTime;
     private readonly object _lockObject = new();
     private static readonly TimeSpan TokenExpiration = TimeSpan.FromMinutes(30);
 
