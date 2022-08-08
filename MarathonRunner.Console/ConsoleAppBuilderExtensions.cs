@@ -62,7 +62,6 @@ public static class ConsoleAppBuilderExtensions
         return HttpPolicyExtensions
             .HandleTransientHttpError()
             .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
-            
-            .WaitAndRetryAsync(600, _ => TimeSpan.FromMilliseconds(10) + TimeSpan.FromMilliseconds(jitterier.Next(0, 5)));
+            .WaitAndRetryAsync(10, _ => TimeSpan.FromMilliseconds(1000) + TimeSpan.FromMilliseconds(jitterier.Next(0, 200)));
     }
 }
