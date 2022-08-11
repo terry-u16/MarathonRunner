@@ -21,8 +21,10 @@ public class GoogleCloudDownloader : IDownloader
         var storage = await StorageClient.CreateAsync(credential);
 
         var path = $"{problemName}/{source}";
-        await using var stream = new FileStream(destination, FileMode.Create, FileAccess.Write);
-        await storage.DownloadObjectAsync(_bucketName, path, stream, cancellationToken: ct);
+        await using (var stream = new FileStream(destination, FileMode.Create, FileAccess.Write))
+        {
+            await storage.DownloadObjectAsync(_bucketName, path, stream, cancellationToken: ct);
+        }
         await ProcessX.StartAsync($"chmod a+x {destination}").WaitAsync(ct);
     }
 }
