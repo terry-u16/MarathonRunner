@@ -1,6 +1,6 @@
-using System.Diagnostics;
-using TerryU16.MarathonRunner.Core;
 using TerryU16.MarathonRunner.Core.Executors;
+using TerryU16.MarathonRunner.Core.Storage;
+using TerryU16.MarathonRunner.Infrastructures.GoogleCloud;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +8,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddTransient<IExecutor, LocalExecutor>();
+builder.Services.AddTransient<IDownloader, GoogleCloudDownloader>();
+
+builder.Host.ConfigureServices((context, services) =>
+{
+    var configurationRoot = context.Configuration;
+    services.Configure<GoogleCloudOptions>(configurationRoot.GetSection(nameof(GoogleCloudOptions)));
+});
 
 var app = builder.Build();
 
@@ -18,26 +26,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapPost("/run", (SingleCaseExecutorArgs? args) =>
+app.MapPost("/run", async (SingleCaseExecutorArgs? args, IExecutor executor) =>
 {
     if (args is null)
     {
         return Results.BadRequest();
     }
 
-    var sw = Stopwatch.StartNew();
-    long counter = 0;
-    var timeLimit = TimeSpan.FromSeconds(2);
+    using var cts = new CancellationTokenSource(args.Timeout);
 
-    while (true)
-    {
-        if ((counter++ & ((1 << 20) - 1)) == 0 && sw.Elapsed > timeLimit)
-        {
-            break;
-        }
-    }
-
-    var result = new TestCaseResult(counter, sw.Elapsed);
+    var result = await executor.ExecuteAsync(args, cts.Token);
     return Results.Json(result);
 })
 .WithName("run");

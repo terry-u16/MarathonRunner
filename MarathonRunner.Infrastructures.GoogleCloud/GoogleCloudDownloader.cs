@@ -1,4 +1,5 @@
-﻿using Google.Apis.Auth.OAuth2;
+﻿using Cysharp.Diagnostics;
+using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Storage.V1;
 using Microsoft.Extensions.Options;
 using TerryU16.MarathonRunner.Core.Storage;
@@ -14,13 +15,14 @@ public class GoogleCloudDownloader : IDownloader
         _bucketName = options.Value.BucketName;
     }
 
-    public async Task DownloadFileAsync(string problemName, string source, string destination)
+    public async Task DownloadFileAsync(string problemName, string source, string destination, CancellationToken ct = default)
     {
-        var credential = await GoogleCredential.GetApplicationDefaultAsync();
+        var credential = await GoogleCredential.GetApplicationDefaultAsync(ct);
         var storage = await StorageClient.CreateAsync(credential);
 
         var path = $"{problemName}/{source}";
         await using var stream = new FileStream(destination, FileMode.Create, FileAccess.Write);
-        await storage.DownloadObjectAsync(_bucketName, path, stream);
+        await storage.DownloadObjectAsync(_bucketName, path, stream, cancellationToken: ct);
+        await ProcessX.StartAsync($"chmod a+x {destination}").WaitAsync(ct);
     }
 }

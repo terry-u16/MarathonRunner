@@ -2,7 +2,7 @@
   "profiles": {
     "MarathonRunner.Console": {
       "commandName": "Project",
-      "commandLineArgs": "compile-rust"
+      "commandLineArgs": "run-cloud"
     }
   }
 }

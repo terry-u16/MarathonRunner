@@ -2,7 +2,6 @@
 using System.Text.RegularExpressions;
 using Cysharp.Diagnostics;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using TerryU16.MarathonRunner.Core.Storage;
 
 namespace TerryU16.MarathonRunner.Core.Executors;
@@ -11,13 +10,11 @@ public class LocalExecutor : IExecutor
 {
     private readonly ILogger<LocalExecutor> _logger;
     private readonly IDownloader _downloader;
-    private readonly string _workingDirectory;
 
-    public LocalExecutor(ILogger<LocalExecutor> logger, IDownloader downloader, IOptions<ExecutionOption> option)
+    public LocalExecutor(ILogger<LocalExecutor> logger, IDownloader downloader)
     {
         _logger = logger;
         _downloader = downloader;
-        _workingDirectory = option.Value.WorkingDirectory;
     }
 
     public async Task<TestCaseResult> ExecuteAsync(SingleCaseExecutorArgs args, CancellationToken ct = default)
@@ -30,7 +27,7 @@ public class LocalExecutor : IExecutor
             using var cts = new CancellationTokenSource(args.Timeout);
             using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(ct, cts.Token);
 
-            await DownloadFilesAsync(args.ProblemName, args.Files);
+            await DownloadFilesAsync(args.ProblemName, args.Files, ct);
 
             foreach (var option in args.ExecutionSteps)
             {
@@ -75,14 +72,18 @@ public class LocalExecutor : IExecutor
         }
     }
 
-    private async Task DownloadFilesAsync(string problemName, IEnumerable<string> filePaths)
+    private async Task DownloadFilesAsync(string problemName, IEnumerable<string> filePaths, CancellationToken ct = default)
     {
         foreach (var filePath in filePaths)
         {
-            var destination = Path.Join(_workingDirectory, filePath);
-            if (!File.Exists(destination))
+            if (!File.Exists(filePath))
             {
-                await _downloader.DownloadFileAsync(problemName, filePath, destination);
+                var parent = Directory.GetParent(filePath);
+                if (!parent?.Exists ?? true)
+                {
+                    parent?.Create();
+                }
+                await _downloader.DownloadFileAsync(problemName, filePath, filePath, ct);
             }
         }
     }

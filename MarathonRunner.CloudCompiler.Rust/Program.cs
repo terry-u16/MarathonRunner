@@ -37,7 +37,7 @@ app.MapPost("/", async (RustCompileArgs? args) =>
             {
                 var path = Path.Combine(tempDirectory, file.FilePath);
                 var parentDirectory = Directory.GetParent(path);
-                if (!parentDirectory?.Exists ?? false)
+                if (!parentDirectory?.Exists ?? true)
                 {
                     parentDirectory?.Create();
                 }

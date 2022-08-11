@@ -2,11 +2,11 @@
 
 public class ExecutionOption
 {
+    public const string SeedPlaceholder = "{SEED}";
+
     public string ScoreRegex { get; set; } = @"Score = (?<score>\d+)";
 
     public string SeedFormat { get; set; } = "0000";
-
-    public string WorkingDirectory { get; set; } = ".";
 
     public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(5);
 

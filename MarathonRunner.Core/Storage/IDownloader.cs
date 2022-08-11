@@ -2,5 +2,5 @@
 
 public interface IDownloader
 {
-    Task DownloadFileAsync(string problemName, string source, string destination);
+    Task DownloadFileAsync(string problemName, string source, string destination, CancellationToken ct = default);
 }
