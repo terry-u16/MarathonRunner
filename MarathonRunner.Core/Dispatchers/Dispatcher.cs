@@ -33,7 +33,6 @@ public abstract class Dispatcher : IDispatcher
             var files = _files.Select(f => f.Replace(ExecutionOption.SeedPlaceholder, seed.ToString(_seedFormat)))
                 .ToArray();
             var args = new SingleCaseExecutorArgs(_problemName, _scoreRegex, _timeout, steps, files);
-            using var cancellationTokenSource = new CancellationTokenSource(_timeout);
             return await DispatchAsyncInner(args, ct);
         }
         catch (OperationCanceledException ex)
