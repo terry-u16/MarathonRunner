@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarathonRunner.Infrastructu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarathonRunner.Console", "MarathonRunner.Console\MarathonRunner.Console.csproj", "{1EDC7251-0DA0-4FF6-B6B2-C4E9074FEB7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarathonRunner.CloudRun", "MarathonRunner.CloudRun\MarathonRunner.CloudRun.csproj", "{9BCB6EC1-8A4F-4EF4-A6B4-23C45D518606}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarathonRunner.CloudRun", "MarathonRunner.CloudRun\MarathonRunner.CloudRun.csproj", "{9BCB6EC1-8A4F-4EF4-A6B4-23C45D518606}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarathonRunner.Infrastructures.GoogleCloud", "MarathonRunner.Infrastructures.GoogleCloud\MarathonRunner.Infrastructures.GoogleCloud.csproj", "{C262C828-BC01-48E0-9A17-FE035365CF92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarathonRunner.Infrastructures.GoogleCloud", "MarathonRunner.Infrastructures.GoogleCloud\MarathonRunner.Infrastructures.GoogleCloud.csproj", "{C262C828-BC01-48E0-9A17-FE035365CF92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarathonRunner.CloudCompiler.Rust", "MarathonRunner.CloudCompiler.Rust\MarathonRunner.CloudCompiler.Rust.csproj", "{09BEBC66-02A3-4DA3-AFA5-9D5750CA8477}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{C262C828-BC01-48E0-9A17-FE035365CF92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C262C828-BC01-48E0-9A17-FE035365CF92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C262C828-BC01-48E0-9A17-FE035365CF92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09BEBC66-02A3-4DA3-AFA5-9D5750CA8477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09BEBC66-02A3-4DA3-AFA5-9D5750CA8477}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09BEBC66-02A3-4DA3-AFA5-9D5750CA8477}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09BEBC66-02A3-4DA3-AFA5-9D5750CA8477}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
