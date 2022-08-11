@@ -10,7 +10,9 @@ public class ExecutionOption
 
     public TimeSpan Timeout { get; set; } = TimeSpan.FromSeconds(5);
 
-    public ExecutionStep[] ExecutionSteps { get; set; } = Array.Empty<ExecutionStep>();
+    public ExecutionStep[] LocalExecutionSteps { get; set; } = Array.Empty<ExecutionStep>();
+
+    public ExecutionStep[] CloudExecutionSteps { get; set; } = Array.Empty<ExecutionStep>();
 
     public string[] Files { get; set; } = Array.Empty<string>();
 }

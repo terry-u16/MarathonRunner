@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MarathonRunner.Core\MarathonRunner.Core.csproj" />
-    <ProjectReference Include="..\MarathonRunner.Infrastructures.AzureBlobStorage\MarathonRunner.Infrastructures.AzureBlobStorage.csproj" />
     <ProjectReference Include="..\MarathonRunner.Infrastructures.GoogleCloud\MarathonRunner.Infrastructures.GoogleCloud.csproj" />
   </ItemGroup>
 

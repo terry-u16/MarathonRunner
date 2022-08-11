@@ -5,13 +5,14 @@ using Microsoft.Extensions.Options;
 using Polly;
 using Polly.Extensions.Http;
 using TerryU16.MarathonRunner.Core;
+using TerryU16.MarathonRunner.Core.Compilers;
 using TerryU16.MarathonRunner.Core.Dispatchers;
 using TerryU16.MarathonRunner.Core.Executors;
 using TerryU16.MarathonRunner.Core.Runners;
 using TerryU16.MarathonRunner.Core.Runners.Callbacks;
 using TerryU16.MarathonRunner.Core.Storage;
-using TerryU16.MarathonRunner.Infrastructures.AzureBlobStorage;
 using TerryU16.MarathonRunner.Infrastructures.GoogleCloud;
+using TerryU16.MarathonRunner.Infrastructures.GoogleCloud.Compilers;
 
 namespace TerryU16.MarathonRunner.Console;
 
@@ -40,15 +41,16 @@ public static class ConsoleAppBuilderExtensions
             services.AddTransient<IRunnerCallback, WrongAnswerCollector>();
             services.AddTransient<LocalDispatcher>();
             services.AddTransient<GoogleCloudDispatcher>();
+            services.AddTransient<RustCompileDispatcher>();
             services.AddTransient<IExecutor, LocalExecutor>();
-            services.AddTransient<IDownloader, BlobDownloader>();
+            services.AddTransient<IDownloader, GoogleCloudDownloader>();
 
             // Options
             var configurationRoot = context.Configuration;
             services.Configure<ProblemOption>(configurationRoot.GetSection(nameof(ProblemOption)));
             services.Configure<RunnerOption>(configurationRoot.GetSection(nameof(RunnerOption)));
             services.Configure<ExecutionOption>(configurationRoot.GetSection(nameof(ExecutionOption)));
-            services.Configure<BlobClientOption>(configurationRoot.GetSection(nameof(BlobClientOption)));
+            services.Configure<CompileOption>(configurationRoot.GetSection(nameof(CompileOption)));
             services.Configure<GoogleCloudOptions>(configurationRoot.GetSection(nameof(GoogleCloudOptions)));
 
             // HttpClient

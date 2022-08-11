@@ -2,11 +2,11 @@ using System.Diagnostics;
 using Cysharp.Diagnostics;
 using TerryU16.MarathonRunner.Core;
 using TerryU16.MarathonRunner.Core.Executors;
-using TerryU16.MarathonRunner.Infrastructures.GoogleCloud;
 using Google;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Storage.v1.Data;
 using Google.Cloud.Storage.V1;
+using TerryU16.MarathonRunner.Infrastructures.GoogleCloud.Compilers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,8 +48,23 @@ app.MapPost("/", async (RustCompileArgs? args) =>
 
             // ƒrƒ‹ƒh
             var (_, stdOut, stdErr) = ProcessX.GetDualAsyncEnumerable("cargo build --release --bin main", workingDirectory: tempDirectory);
+            var consumeStdOut = Task.Run(async () =>
+            {
+                await foreach (var item in stdOut)
+                {
+                    Console.WriteLine("STD_OUT: " + item);
+                }
+            });
 
-            await Task.WhenAll(stdOut.WaitAsync(), stdErr.WaitAsync());
+            var consumeStdError = Task.Run(async () =>
+            {
+                await foreach (var item in stdErr)
+                {
+                    Console.WriteLine("STD_ERROR: " + item);
+                }
+            });
+
+            await Task.WhenAll(consumeStdOut, consumeStdError);
 
             var credential = await GoogleCredential.GetApplicationDefaultAsync();
             var storage = await StorageClient.CreateAsync(credential);

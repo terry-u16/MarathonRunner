@@ -14,15 +14,15 @@ public abstract class Dispatcher : IDispatcher
     private readonly string[] _files;
     private readonly ILogger<Dispatcher> _logger;
 
-    protected Dispatcher(IOptions<ProblemOption> problemOptions, IOptions<ExecutionOption> executionOptions, ILogger<Dispatcher> logger)
+    protected Dispatcher(IOptions<ProblemOption> problemOptions, IOptions<ExecutionOption> executionOptions, ILogger<Dispatcher> logger, ExecutionStep[] executionSteps)
     {
         _logger = logger;
         _problemName = problemOptions.Value.ProblemName;
         _scoreRegex = executionOptions.Value.ScoreRegex;
         _seedFormat = executionOptions.Value.SeedFormat;
         _timeout = executionOptions.Value.Timeout;
-        _executionSteps = executionOptions.Value.ExecutionSteps;
         _files = executionOptions.Value.Files;
+        _executionSteps = executionSteps;
     }
 
     public async Task<TestCaseResult> DispatchAsync(int seed, CancellationToken ct = default)

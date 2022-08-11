@@ -16,7 +16,7 @@ public class GoogleCloudDispatcher : Dispatcher
 
     public GoogleCloudDispatcher(IOptions<ProblemOption> problemOptions, IOptions<ExecutionOption> executionOptions,
         IOptions<GoogleCloudOptions> googleCloudOption, ILogger<GoogleCloudDispatcher> logger, HttpClient httpClient) 
-        : base(problemOptions, executionOptions, logger)
+        : base(problemOptions, executionOptions, logger, executionOptions.Value.CloudExecutionSteps)
     {
         var endPoint = googleCloudOption.Value.RunEndpoint;
         ArgumentNullException.ThrowIfNull(endPoint);
@@ -30,7 +30,7 @@ public class GoogleCloudDispatcher : Dispatcher
         var contentJson = JsonConvert.SerializeObject(args);
         var request = new HttpRequestMessage(HttpMethod.Post, _endPoint);
         request.Content = new StringContent(contentJson, Encoding.UTF8, "application/json");
-        request.Headers.Add("Authorization", $"Bearer {await _tokenService.GetIdTokenAsync()}");
+        request.Headers.Add("Authorization", $"Bearer {await _tokenService.GetIdTokenAsync(ct)}");
 
         var response = await _httpClient.SendAsync(request, ct);
         response.EnsureSuccessStatusCode();

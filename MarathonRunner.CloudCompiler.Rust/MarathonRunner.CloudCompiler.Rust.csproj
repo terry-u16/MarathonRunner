@@ -24,7 +24,7 @@
     <None Update="rust\Cargo.toml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="rust\src\main.rs">
+    <None Update="rust\src\bin\main.rs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

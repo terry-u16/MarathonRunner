@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# 除外
+!MarathonRunner.CloudCompiler.Rust/rust/src/bin

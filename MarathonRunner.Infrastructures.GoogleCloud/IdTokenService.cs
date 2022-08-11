@@ -10,13 +10,13 @@ internal class IdTokenService
     private readonly object _lockObject = new();
     private static readonly TimeSpan TokenExpiration = TimeSpan.FromMinutes(30);
 
-    public Task<string> GetIdTokenAsync()
+    public Task<string> GetIdTokenAsync(CancellationToken ct = default)
     {
         lock (_lockObject)
         {
             if (_idTokenTask is null || DateTimeOffset.Now - _lastUpdatedTime > TokenExpiration)
             {
-                _idTokenTask = RequestTokenAsync();
+                _idTokenTask = RequestTokenAsync(ct);
                 _lastUpdatedTime = DateTimeOffset.Now;
             }
         }
@@ -24,7 +24,7 @@ internal class IdTokenService
         return _idTokenTask;
     }
 
-    private static async Task<string> RequestTokenAsync()
+    private static async Task<string> RequestTokenAsync(CancellationToken ct = default)
     {
         var token = "";
 
@@ -32,7 +32,7 @@ internal class IdTokenService
         {
             try
             {
-                token = await ProcessX.StartAsync("pwsh -c gcloud.ps1 auth print-identity-token").FirstAsync();
+                token = await ProcessX.StartAsync("pwsh -c gcloud.ps1 auth print-identity-token").FirstAsync(ct);
                 spinner.Succeed("Token acquired.");
             }
             catch (Exception)
