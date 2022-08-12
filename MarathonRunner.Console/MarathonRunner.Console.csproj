@@ -7,6 +7,14 @@
     <Nullable>enable</Nullable>
     <RootNamespace>TerryU16.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <UserSecretsId>d964bdd1-3335-4c95-b108-626596194283</UserSecretsId>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/terry-u16/MarathonRunner</RepositoryUrl>
+    <PackageId>TerryU16.$(AssemblyName)</PackageId>
+    <Authors>terry_u16</Authors>
+    <AssemblyName>TerryU16.$(MSBuildProjectName)</AssemblyName>
+    <Version>1.0.0</Version>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>marathon</ToolCommandName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +22,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="6.0.7" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
@@ -22,7 +31,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MarathonRunner.Core\MarathonRunner.Core.csproj" />
-    <ProjectReference Include="..\MarathonRunner.Infrastructures.AzureBlobStorage\MarathonRunner.Infrastructures.AzureBlobStorage.csproj" />
+    <ProjectReference Include="..\MarathonRunner.Infrastructures.GoogleCloud\MarathonRunner.Infrastructures.GoogleCloud.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

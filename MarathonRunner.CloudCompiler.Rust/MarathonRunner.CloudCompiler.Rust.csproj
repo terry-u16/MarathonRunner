@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>7f66072f-516a-427d-a0f4-86c9ee58d886</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <RootNamespace>TerryU16.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <AssemblyName>TerryU16.$(MSBuildProjectName)</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Cloud.Storage.V1" Version="4.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.16.1" />
+    <PackageReference Include="ProcessX" Version="1.5.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MarathonRunner.Core\MarathonRunner.Core.csproj" />
+    <ProjectReference Include="..\MarathonRunner.Infrastructures.GoogleCloud\MarathonRunner.Infrastructures.GoogleCloud.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="rust\Cargo.toml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="rust\src\bin\main.rs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

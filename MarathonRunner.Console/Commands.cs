@@ -1,19 +1,24 @@
 ﻿using System.Text.Encodings.Web;
 using System.Text.Json;
+using TerryU16.MarathonRunner.Core.Compilers;
 using TerryU16.MarathonRunner.Core.Executors;
 using TerryU16.MarathonRunner.Core.Runners;
+using TerryU16.MarathonRunner.Infrastructures.GoogleCloud;
+using TerryU16.MarathonRunner.Infrastructures.GoogleCloud.Compilers;
 
 namespace TerryU16.MarathonRunner.Console;
 
 public class Commands : ConsoleAppBase
 {
     private readonly LocalRunner _localRunner;
-    private readonly CloudRunner _cloudRunner;
+    private readonly GoogleCloudRunner _cloudRunner;
+    private readonly RustCompileDispatcher _rustCompileDispatcher;
 
-    public Commands(LocalRunner localRunner, CloudRunner cloudRunner)
+    public Commands(LocalRunner localRunner, GoogleCloudRunner cloudRunner, RustCompileDispatcher rustCompileDispatcher)
     {
         _localRunner = localRunner;
         _cloudRunner = cloudRunner;
+        _rustCompileDispatcher = rustCompileDispatcher;
     }
 
     [Command("init", "ツールの初期化を行います。")]
@@ -37,6 +42,7 @@ public class Commands : ConsoleAppBase
         var problemName = ShowInputPrompt("問題名");
         var timeLimit = TimeSpan.FromSeconds(double.Parse(ShowInputPrompt("実行時間制限[s]")));
         var caseCount = int.Parse(ShowInputPrompt("実行ケース数"));
+        var scoreRegex = ShowInputPrompt("スコア正規表現");
         var referenceScore = long.Parse(ShowInputPrompt("レファレンススコア"));
         var configuration = new Configuration(new (), new (), new (), new ())
         {
@@ -52,8 +58,9 @@ public class Commands : ConsoleAppBase
             },
             ExecutionOption =
             {
-                Timeout = timeLimit * 2,
-                ExecutionSteps = new[]
+                ScoreRegex = scoreRegex,
+                Timeout = timeLimit * 10,
+                LocalExecutionSteps = new[]
                 {
                     new ExecutionStep
                     {
@@ -61,7 +68,27 @@ public class Commands : ConsoleAppBase
                         StdInPath = "in/{SEED}.txt"
                     }
                 },
-                Files = new[] { "in/{SEED}.txt" }
+                CloudExecutionSteps = new[]
+                {
+                    new ExecutionStep
+                    {
+                        ExecutionCommand = "main",
+                        StdInPath = "in/{SEED}.txt"
+                    }
+                },
+                Files = new[] { "main", "in/{SEED}.txt" }
+            },
+            CompileOption =
+            {
+                ExeName = "main",
+                Files = new[]
+                {
+                    new CompileFile
+                    {
+                        Source = "src/bin/a.rs",
+                        Destination = "src/bin/main.rs"
+                    }
+                }
             }
         };
 
@@ -72,6 +99,7 @@ public class Commands : ConsoleAppBase
         };
         await using var stream = new FileStream(Constants.ConfigurationFileName, FileMode.Create, FileAccess.Write);
         await JsonSerializer.SerializeAsync(stream, configuration, serializerOptions, Context.CancellationToken);
+        System.Console.WriteLine("Initialized!");
     }
 
     private static string ShowInputPrompt(string itemName)
@@ -80,6 +108,12 @@ public class Commands : ConsoleAppBase
         var input = System.Console.ReadLine();
         if (input is null) throw new ObjectDisposedException("StandardInput");
         return input;
+    }
+
+    [Command("compile-rust", "Rustのコンパイルを実行します。")]
+    public async Task CompileRustAsync()
+    {
+        await _rustCompileDispatcher.CompileAsync(Context.CancellationToken);
     }
 
     [Command("run-local", "ローカルでテストケースを実行します。")]

@@ -5,11 +5,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>TerryU16.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <AssemblyName>TerryU16.$(MSBuildProjectName)</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.13.0" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+    <PackageReference Include="Google.Apis.Auth" Version="1.57.0" />
+    <PackageReference Include="Google.Cloud.Storage.V1" Version="4.1.0" />
+    <PackageReference Include="Kurukuru" Version="1.4.2" />
+    <PackageReference Include="ProcessX" Version="1.5.4" />
   </ItemGroup>
 
   <ItemGroup>
