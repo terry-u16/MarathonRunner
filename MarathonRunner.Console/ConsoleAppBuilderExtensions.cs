@@ -61,7 +61,7 @@ public static class ConsoleAppBuilderExtensions
     {
         return builder.ConfigureLogging(logging =>
         {
-            logging.SetMinimumLevel(LogLevel.Warning);
+            logging.SetMinimumLevel(LogLevel.Information);
         });
     }
 
