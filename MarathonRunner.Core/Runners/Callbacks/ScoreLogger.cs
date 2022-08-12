@@ -58,7 +58,7 @@ public class ScoreLogger : IRunnerCallback
         var completedCaseString = _completedCaseCount.ToString().PadLeft(_casesStringLength);
         var plannedCaseString = _plannedCaseCount.ToString().PadLeft(_casesStringLength);
         var scoreCaseString = result.Score.ToString("#,##0").PadLeft(_scoreStringLength);
-        _logger.LogInformation("case {seed} | completed: {count} / {cases} | {elapsed,5:#,##0} ms | {score} | rate: {rate,7:0.000}% | average: {average,7:0.000}%",
+        _logger.LogInformation("case{seed} | completed: {count} / {cases} | {elapsed,5:#,##0} ms | {score} | rate: {rate,7:0.000}% | average: {average,7:0.000}%",
             seedString, completedCaseString, plannedCaseString, elapsed, scoreCaseString, rate, average);
     }
 
