@@ -61,8 +61,6 @@ public static class ConsoleAppBuilderExtensions
     {
         return builder.ConfigureLogging(logging =>
         {
-            logging.ClearProviders();
-            logging.AddConsole();
             logging.SetMinimumLevel(LogLevel.Warning);
         });
     }
