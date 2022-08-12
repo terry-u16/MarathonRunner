@@ -29,4 +29,4 @@ RUN cp ./work/temp/target ./work/target -r \
     && cp ./work/temp/Cargo.lock ./work/Cargo.lock
 RUN rm -r ./work/temp
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "MarathonRunner.CloudCompiler.Rust.dll"]
+ENTRYPOINT ["dotnet", "TerryU16.MarathonRunner.CloudCompiler.Rust.dll"]
