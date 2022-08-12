@@ -26,4 +26,4 @@ jobs:
       - name: Push nuget package
         run: |
           dotnet nuget push TerryU16.MarathonRunner.Console.${VERSION}.nupkg \
-          --source https://nuget.pkg.github.com/terry-u16/index.json --api-key ${GITHUB_TOKEN}
+          --source https://nuget.pkg.github.com/terry-u16/index.json --api-key ${{secrets.PACKAGES_PAT}}
