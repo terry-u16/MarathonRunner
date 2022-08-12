@@ -16,6 +16,10 @@ jobs:
       - name: Set version
         run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
 
+      - name: Build
+        run: |
+          dotnet build -c Release
+
       - name: Generate nuget package
         run: dotnet pack MarathonRunner.Console -c Release /p:Version=${VERSION} -o .
 
