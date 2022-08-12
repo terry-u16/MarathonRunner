@@ -96,7 +96,7 @@ public class LocalExecutor : IExecutor
             long score = 0;
 
             // 出力先がnullの場合はMemoryStreamにゴミを吐き出す
-            var stream = !string.IsNullOrWhiteSpace(outputPath) ? new StreamWriter(outputPath) : new StreamWriter(new MemoryStream());
+            await using var stream = !string.IsNullOrWhiteSpace(outputPath) ? new StreamWriter(outputPath) : new StreamWriter(new MemoryStream());
 
             await foreach (var line in outputs.WithCancellation(cancellationToken))
             {
