@@ -4,6 +4,6 @@ var builder = ConsoleApp.CreateBuilder(args, options =>
 {
     options.ApplicationName = "marathon-runner";
 });
-var app = builder.ConfigureOptions().ConfigureServiceDependencies().Build();
+var app = builder.ConfigureOptions().ConfigureServiceDependencies().ConfigureLogging().Build();
 app.AddCommands<Commands>();
 app.Run();

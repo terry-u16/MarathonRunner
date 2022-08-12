@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Extensions.Http;
 using TerryU16.MarathonRunner.Core;
@@ -53,6 +54,15 @@ public static class ConsoleAppBuilderExtensions
 
             // HttpClient
             services.AddHttpClient<GoogleCloudDispatcher>().AddPolicyHandler(GetRetryPolicy());
+        });
+    }
+
+    public static ConsoleAppBuilder ConfigureLogging(this ConsoleAppBuilder builder)
+    {
+        return builder.ConfigureLogging(logging =>
+        {
+            logging.ClearProviders();
+            logging.AddConsole(options => options.LogToStandardErrorThreshold = LogLevel.Warning);
         });
     }
 
