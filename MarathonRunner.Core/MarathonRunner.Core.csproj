@@ -5,6 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>TerryU16.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
+    <AssemblyName>TerryU16.$(MSBuildProjectName)</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
