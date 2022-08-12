@@ -8,9 +8,9 @@ public class RunnerOption
 
     public long ReferenceScore { get; set; } = 100;
 
-    public int LocalParallelCount { get; set; } = 16;
+    public int LocalParallelCount { get; set; } = Environment.ProcessorCount;
 
-    public int CloudParallelCount { get; set; } = 200;
+    public int CloudParallelCount { get; set; } = 300;
 
     public string SummaryFilePath { get; set; } = @".\data\score_history.txt";
 }

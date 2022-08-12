@@ -59,7 +59,7 @@ public class Commands : ConsoleAppBase
             ExecutionOption =
             {
                 ScoreRegex = scoreRegex,
-                Timeout = timeLimit * 2,
+                Timeout = timeLimit * 10,
                 LocalExecutionSteps = new[]
                 {
                     new ExecutionStep
@@ -76,7 +76,7 @@ public class Commands : ConsoleAppBase
                         StdInPath = "in/{SEED}.txt"
                     }
                 },
-                Files = new[] { "in/{SEED}.txt" }
+                Files = new[] { "main", "in/{SEED}.txt" }
             },
             CompileOption =
             {
