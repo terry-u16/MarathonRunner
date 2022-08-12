@@ -17,6 +17,12 @@ public class ScoreLogger : IRunnerCallback
 
     private readonly ILogger<ScoreLogger> _logger;
 
+    private readonly int _seedStringLength;
+
+    private readonly int _casesStringLength;
+
+    private readonly int _scoreStringLength;
+
     public ScoreLogger(ILogger<ScoreLogger> logger, IOptions<RunnerOption> options)
     {
         _totalScore = 0;
@@ -25,6 +31,9 @@ public class ScoreLogger : IRunnerCallback
         _referenceScore = options.Value.ReferenceScore;
         _plannedCaseCount = options.Value.EndSeed - options.Value.StartSeed;
         _logger = logger;
+        _seedStringLength = Math.Max(options.Value.EndSeed.ToString().Length, 4);
+        _casesStringLength = _plannedCaseCount.ToString().Length;
+        _scoreStringLength = _referenceScore.ToString("#,##0").Length;
     }
 
     public void OnSingleTestEnd(int seed, TestCaseResult result)
@@ -45,8 +54,12 @@ public class ScoreLogger : IRunnerCallback
         var rate = (double)result.Score * 100 / _referenceScore;
         var average = (double)_totalScore * 100 / (_referenceScore * _completedCaseCount);
 
-        _logger.LogInformation("case {seed:00000} | completed: {count,5} / {cases,5} | {elapsed,5:#,##0} ms | {score,11:#,##0} | rate: {rate,7:0.000}% | average: {average,7:0.000}%",
-            seed, _completedCaseCount, _plannedCaseCount, elapsed, result.Score, rate, average);
+        var seedString = seed.ToString().PadLeft(_seedStringLength, '0');
+        var completedCaseString = _completedCaseCount.ToString().PadLeft(_casesStringLength);
+        var plannedCaseString = _plannedCaseCount.ToString().PadLeft(_casesStringLength);
+        var scoreCaseString = result.Score.ToString("#,##0").PadLeft(_scoreStringLength);
+        _logger.LogInformation("case {seed} | completed: {count} / {cases} | {elapsed,5:#,##0} ms | {score} | rate: {rate,7:0.000}% | average: {average,7:0.000}%",
+            seedString, completedCaseString, plannedCaseString, elapsed, scoreCaseString, rate, average);
     }
 
     protected virtual void LogAllResult()
