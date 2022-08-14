@@ -19,6 +19,8 @@ public class LocalExecutor : IExecutor
 
     public async Task<TestCaseResult> ExecuteAsync(SingleCaseExecutorArgs args, CancellationToken ct = default)
     {
+        var messages = new List<string>();
+
         try
         {
             var regex = new Regex(args.ScoreRegex);
@@ -33,8 +35,8 @@ public class LocalExecutor : IExecutor
             {
                 var (process, stdOut, stdError) = ProcessX.GetDualAsyncEnumerable(option.ExecutionCommand);
 
-                var consumeStdOut = SetOutputCallback(stdOut, regex, option.StdOutPath, linkedCts.Token);
-                var consumeStdError = SetOutputCallback(stdError, regex, option.StdErrorPath, linkedCts.Token);
+                var consumeStdOut = SetOutputCallback(stdOut, regex, option.StdOutPath, messages, linkedCts.Token);
+                var consumeStdError = SetOutputCallback(stdError, regex, option.StdErrorPath, messages, linkedCts.Token);
 
                 if (!string.IsNullOrWhiteSpace(option.StdInPath))
                 {
@@ -67,8 +69,9 @@ public class LocalExecutor : IExecutor
         }
         catch (Exception ex)
         {
-            _logger.LogWarning(ex.Message);
-            return new TestCaseResult(0, default, ex.Message);
+            var message = string.Join(Environment.NewLine, messages.Prepend(ex.Message));
+            _logger.LogWarning("{Message}", message);
+            return new TestCaseResult(0, default, message);
         }
     }
 
@@ -89,7 +92,7 @@ public class LocalExecutor : IExecutor
     }
 
     private static Task<long> SetOutputCallback(ProcessAsyncEnumerable outputs, Regex regex,
-        string? outputPath, CancellationToken cancellationToken = default)
+        string? outputPath, List<string> messages, CancellationToken cancellationToken = default)
     {
         var consumeOutput = Task.Run(async () =>
         {
@@ -100,6 +103,7 @@ public class LocalExecutor : IExecutor
 
             await foreach (var line in outputs.WithCancellation(cancellationToken))
             {
+                messages.Add(line);
                 var match = regex.Match(line);
 
                 if (match.Success)

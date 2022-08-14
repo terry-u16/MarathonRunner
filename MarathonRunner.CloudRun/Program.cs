@@ -10,6 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IExecutor, LocalExecutor>();
 builder.Services.AddTransient<IDownloader, GoogleCloudDownloader>();
+builder.Logging.AddConsole();
 
 builder.Host.ConfigureServices((context, services) =>
 {
