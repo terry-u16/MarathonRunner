@@ -79,15 +79,12 @@ public class LocalExecutor : IExecutor
     {
         foreach (var filePath in filePaths)
         {
-            if (!File.Exists(filePath))
+            var parent = Directory.GetParent(filePath);
+            if (!parent?.Exists ?? true)
             {
-                var parent = Directory.GetParent(filePath);
-                if (!parent?.Exists ?? true)
-                {
-                    parent?.Create();
-                }
-                await _downloader.DownloadFileAsync(problemName, filePath, filePath, ct);
+                parent?.Create();
             }
+            await _downloader.DownloadFileAsync(problemName, filePath, filePath, ct);
         }
     }
 
