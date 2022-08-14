@@ -33,7 +33,12 @@ public abstract class Dispatcher : IDispatcher
             var files = _files.Select(f => f.Replace(ExecutionOption.SeedPlaceholder, seed.ToString(_seedFormat)))
                 .ToArray();
             var args = new SingleCaseExecutorArgs(_problemName, _scoreRegex, _timeout, steps, files);
-            return await DispatchAsyncInner(args, ct);
+            var result = await DispatchAsyncInner(args, ct);
+            if (!string.IsNullOrWhiteSpace(result.Message))
+            {
+                _logger.LogWarning(result.Message);
+            }
+            return result;
         }
         catch (OperationCanceledException ex)
         {
