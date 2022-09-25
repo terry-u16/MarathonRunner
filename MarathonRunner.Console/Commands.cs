@@ -1,7 +1,5 @@
-﻿using Polly;
-using System.Text.Encodings.Web;
+﻿using System.Text.Encodings.Web;
 using System.Text.Json;
-using System.Xml.Linq;
 using TerryU16.MarathonRunner.Core.Compilers;
 using TerryU16.MarathonRunner.Core.Executors;
 using TerryU16.MarathonRunner.Core.Runners;
