@@ -41,7 +41,7 @@ public static class ConsoleAppBuilderExtensions
             services.AddTransient<LocalDispatcher>();
             services.AddTransient<GoogleCloudDispatcher>();
             services.AddTransient<RustCompileDispatcher>();
-            services.AddTransient<IExecutor, LocalExecutor>();
+            services.AddTransient<LocalExecutor>();
             services.AddTransient<IDownloader, GoogleCloudDownloader>();
 
             // Options

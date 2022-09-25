@@ -6,10 +6,10 @@ namespace TerryU16.MarathonRunner.Core.Dispatchers;
 
 public class LocalDispatcher : Dispatcher
 {
-    private readonly IExecutor _executor;
+    private readonly LocalExecutor _executor;
     
     public LocalDispatcher(IOptions<ProblemOption> problemOptions, IOptions<ExecutionOption> executionOptions, 
-        ILogger<LocalDispatcher> logger, IExecutor executor) : base(problemOptions, executionOptions, logger, 
+        ILogger<LocalDispatcher> logger, LocalExecutor executor) : base(problemOptions, executionOptions, logger, 
         executionOptions.Value.LocalExecutionSteps)
     {
         _executor = executor;
