@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<IExecutor, LocalExecutor>();
+builder.Services.AddTransient<IExecutor, GoogleCloudExecutor>();
 builder.Services.AddTransient<IDownloader, GoogleCloudDownloader>();
 builder.Logging.AddConsole();
 
