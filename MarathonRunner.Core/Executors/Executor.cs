@@ -62,13 +62,13 @@ public abstract class Executor : IExecutor
                 }
             }
 
-            return new TestCaseResult(score, elapsed);
+            return new TestCaseResult(args.Seed, score, elapsed);
         }
         catch (Exception ex)
         {
             var message = string.Join(Environment.NewLine, messages.Prepend(ex.Message));
             _logger.LogWarning("{Message}", message);
-            return new TestCaseResult(0, default, message);
+            return new TestCaseResult(args.Seed, 0, default, message);
         }
     }
 

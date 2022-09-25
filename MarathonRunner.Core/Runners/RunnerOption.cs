@@ -13,4 +13,6 @@ public class RunnerOption
     public int CloudParallelCount { get; set; } = 300;
 
     public string SummaryFilePath { get; set; } = @".\data\score_history.txt";
+
+    public string ResultDirectoryPath { get; set; } = @".\data\results";
 }

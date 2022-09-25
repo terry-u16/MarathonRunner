@@ -117,14 +117,14 @@ public class Commands : ConsoleAppBase
     }
 
     [Command("run-local", "ローカルでテストケースを実行します。")]
-    public async Task RunLocalAsync()
+    public async Task RunLocalAsync([Option("c", "テストケースのコメント")] string comment = "")
     {
-        await _localRunner.RunAsync(Context.CancellationToken);
+        await _localRunner.RunAsync(comment, Context.CancellationToken);
     }
 
     [Command("run-cloud", "クラウド上でテストケースを実行します。")]
-    public async Task RunCloudAsync()
+    public async Task RunCloudAsync([Option("c", "テストケースのコメント")] string comment = "")
     {
-        await _cloudRunner.RunAsync(Context.CancellationToken);
+        await _cloudRunner.RunAsync(comment, Context.CancellationToken);
     }
 }

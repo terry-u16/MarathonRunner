@@ -32,7 +32,7 @@ public abstract class Dispatcher : IDispatcher
             var steps = _executionSteps.Select(step => step.WithSeed(seed, _seedFormat)).ToArray();
             var files = _files.Select(f => f.Replace(ExecutionOption.SeedPlaceholder, seed.ToString(_seedFormat)))
                 .ToArray();
-            var args = new SingleCaseExecutorArgs(_problemName, _scoreRegex, _timeout, steps, files);
+            var args = new SingleCaseExecutorArgs(_problemName, _scoreRegex, seed, _timeout, steps, files);
             var result = await DispatchAsyncInner(args, ct);
             if (!string.IsNullOrWhiteSpace(result.Message))
             {
@@ -43,7 +43,7 @@ public abstract class Dispatcher : IDispatcher
         catch (OperationCanceledException ex)
         {
             _logger.LogWarning(ex.Message);
-            return new(0, default, ex.Message);
+            return new(seed, 0, default, ex.Message);
         }
     }
 
