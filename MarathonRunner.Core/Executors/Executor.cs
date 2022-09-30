@@ -66,7 +66,7 @@ public abstract class Executor : IExecutor
         }
         catch (Exception ex)
         {
-            var message = string.Join(Environment.NewLine, messages.Prepend(ex.Message));
+            var message = string.Join(Environment.NewLine, messages.Prepend(ex.ToString()));
             _logger.LogWarning("{Message}", message);
             return new TestCaseResult(args.Seed, 0, default, message);
         }
