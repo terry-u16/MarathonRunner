@@ -8,7 +8,7 @@
     <RootNamespace>TerryU16.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
     <UserSecretsId>d964bdd1-3335-4c95-b108-626596194283</UserSecretsId>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <RepositoryUrl>https://github.com/terry-u16/AtCoderHelper</RepositoryUrl>
+    <RepositoryUrl>https://github.com/terry-u16/MarathonRunner</RepositoryUrl>
     <PackageId>TerryU16.$(AssemblyName)</PackageId>
     <Authors>terry_u16</Authors>
     <AssemblyName>TerryU16.$(MSBuildProjectName)</AssemblyName>
