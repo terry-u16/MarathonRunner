@@ -26,7 +26,7 @@ public class RustCompileDispatcher : ICompileDispatcher
         _exeName = compileOption.Value.ExeName;
         _compileFiles = compileOption.Value.Files;
         _httpClient = httpClient;
-        _tokenService = new IdTokenService();
+        _tokenService = IdTokenService.Instance;
     }
 
     public async Task CompileAsync(CancellationToken ct = default)

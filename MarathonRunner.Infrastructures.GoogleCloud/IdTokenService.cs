@@ -10,6 +10,10 @@ internal class IdTokenService
     private readonly object _lockObject = new();
     private static readonly TimeSpan TokenExpiration = TimeSpan.FromMinutes(30);
 
+    private static readonly IdTokenService _instance = new();
+
+    public static IdTokenService Instance => _instance;
+
     public Task<string> GetIdTokenAsync(CancellationToken ct = default)
     {
         lock (_lockObject)
