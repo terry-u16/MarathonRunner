@@ -127,4 +127,11 @@ public class Commands : ConsoleAppBase
     {
         await _cloudRunner.RunAsync(comment, Context.CancellationToken);
     }
+
+    [Command("compile-run-cloud", "Rustのコンパイルを実行したのち、クラウド上でテストケースを実行します。")]
+    public async Task CompileRunCloudAsync([Option("c", "テストケースのコメント")] string comment = "")
+    {
+        await _rustCompileDispatcher.CompileAsync(Context.CancellationToken);
+        await _cloudRunner.RunAsync(comment, Context.CancellationToken);
+    }
 }
