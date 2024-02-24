@@ -4,7 +4,7 @@ FROM rust:1.70 AS base
 WORKDIR /app
 EXPOSE 8080
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["MarathonRunner.CloudCompiler.Rust/MarathonRunner.CloudCompiler.Rust.csproj", "MarathonRunner.CloudCompiler.Rust/"]
 RUN dotnet restore "MarathonRunner.CloudCompiler.Rust/MarathonRunner.CloudCompiler.Rust.csproj"
@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install sudo
 RUN wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
     && sudo dpkg -i packages-microsoft-prod.deb \
     && rm packages-microsoft-prod.deb
-RUN sudo apt-get update && sudo apt-get install -y aspnetcore-runtime-6.0
+RUN sudo apt-get update && sudo apt-get install -y aspnetcore-runtime-8.0
 COPY MarathonRunner.CloudCompiler.Rust/rust/ ./work/temp
 RUN cd ./work/temp && cargo build --release --bin main
 RUN cp ./work/temp/target ./work/target -r \
