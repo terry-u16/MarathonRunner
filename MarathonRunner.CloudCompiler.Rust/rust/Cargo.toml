@@ -10,7 +10,7 @@ name = "main"
 path = "src/bin/main.rs"
 
 [profile.release]
-lto = true # コンパイル時間が著しく長くなってしまう場合は無し
+#lto = true # コンパイル時間が著しく長くなってしまう場合は無し
 
 [dependencies]
 # 202301から:
