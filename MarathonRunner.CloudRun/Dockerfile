@@ -16,6 +16,7 @@ FROM build AS publish
 RUN dotnet publish "MarathonRunner.CloudRun.csproj" -c Release -o /app/publish
 
 FROM base AS final
+ENV $env:DURATION_MUL 2.0
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "TerryU16.MarathonRunner.CloudRun.dll"]
