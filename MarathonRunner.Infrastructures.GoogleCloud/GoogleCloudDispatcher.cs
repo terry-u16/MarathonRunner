@@ -22,7 +22,7 @@ public class GoogleCloudDispatcher : Dispatcher
         ArgumentNullException.ThrowIfNull(endPoint);
         _endPoint = endPoint;
         _httpClient = httpClient;
-        _tokenService = new IdTokenService();
+        _tokenService = IdTokenService.Instance;
     }
 
     protected override async Task<TestCaseResult> DispatchAsyncInner(SingleCaseExecutorArgs args, CancellationToken ct = default)

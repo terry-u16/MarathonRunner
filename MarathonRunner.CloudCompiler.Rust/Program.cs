@@ -31,7 +31,8 @@ app.MapPost("/", async (RustCompileArgs? args) =>
         {
             // ƒRƒs[
             Directory.CreateDirectory(tempDirectory);
-            CopyDirectory("work", "temp", true);
+            var copyTasks = CopyDirectory("work", "temp", true);
+            await Task.WhenAll(copyTasks);
 
             foreach (var file in args.Files)
             {
@@ -86,7 +87,7 @@ app.MapPost("/", async (RustCompileArgs? args) =>
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 app.Run($"http://0.0.0.0:{port}");
 
-static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
+static List<Task> CopyDirectory(string sourceDir, string destinationDir, bool recursive)
 {
     var dir = new DirectoryInfo(sourceDir);
 
@@ -95,9 +96,15 @@ static void CopyDirectory(string sourceDir, string destinationDir, bool recursiv
 
     Directory.CreateDirectory(destinationDir);
 
+    var tasks = new List<Task>();
+
     foreach (var file in dir.EnumerateFiles())
     {
-        file.CopyTo(Path.Combine(destinationDir, file.Name));
+        var task = Task.Run(() =>
+        {
+            file.CopyTo(Path.Combine(destinationDir, file.Name));
+        });
+        tasks.Add(task);
     }
 
     if (recursive)
@@ -105,7 +112,9 @@ static void CopyDirectory(string sourceDir, string destinationDir, bool recursiv
         foreach (var subDir in dir.EnumerateDirectories())
         {
             var newDestinationDir = Path.Combine(destinationDir, subDir.Name);
-            CopyDirectory(subDir.FullName, newDestinationDir, true);
+            tasks.AddRange(CopyDirectory(subDir.FullName, newDestinationDir, true));
         }
     }
+
+    return tasks;
 }
